@@ -22,9 +22,6 @@ services:
       timeout: 5s
       retries: 5
 
-    networks:
-      - zipline-internal
-
   zipline:
     image: ghcr.io/diced/zipline:latest
     container_name: zipline
@@ -57,17 +54,6 @@ services:
       timeout: 3s
       retries: 5
       start_period: 30s
-
-    networks:
-      - zipline-internal
-
-networks:
-  zipline-internal:
-    name: zipline-internal
-    driver: bridge
-    ipam:
-      config:
-        - subnet: ${ZIPLINE_NETWORK_SUBNET:-172.30.40.0/24}
 
 volumes:
   zipline-postgresql-data:
