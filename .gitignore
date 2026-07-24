@@ -1,0 +1,18 @@
+# Secrets: keep the documented template, never the active configuration.
+.env
+.env.*
+!.env.example
+
+# Runtime data uploaded to Zipline's local datasource.
+uploads/
+
+# Local overrides and temporary files.
+compose.override.yml
+*.log
+*.tmp
+
+# Editor and operating-system metadata.
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
