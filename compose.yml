@@ -22,6 +22,9 @@ services:
       timeout: 5s
       retries: 5
 
+    networks:
+      - zipline-internal
+
   zipline:
     image: ghcr.io/diced/zipline:latest
     container_name: zipline
@@ -54,6 +57,14 @@ services:
       timeout: 3s
       retries: 5
       start_period: 30s
+
+    networks:
+      - zipline-internal
+
+networks:
+  # Docker allocates a non-conflicting subnet automatically.
+  zipline-internal:
+    name: zipline-internal
 
 volumes:
   zipline-postgresql-data:
