@@ -41,6 +41,24 @@ CORE_TRUST_PROXY=true
 CORE_RETURN_HTTPS_URLS=true
 ```
 
+## Jaringan dan akses port
+
+Service menggunakan network Docker bridge khusus dengan subnet
+`172.30.40.0/24`. Nilai ini dapat diubah melalui `ZIPLINE_NETWORK_SUBNET` jika
+bertabrakan dengan network Docker atau LAN yang sudah ada.
+
+Zipline dipublikasikan hanya pada `127.0.0.1:3000`, bukan pada semua interface
+host. Gunakan reverse proxy lokal untuk menyediakan HTTPS publik.
+
+```env
+ZIPLINE_BIND_ADDRESS=127.0.0.1
+ZIPLINE_HOST_PORT=3000
+ZIPLINE_NETWORK_SUBNET=172.30.40.0/24
+```
+
+Jangan gunakan `0.0.0.0` sebagai `ZIPLINE_BIND_ADDRESS` kecuali firewall dan
+kontrol akses jaringan sudah dikonfigurasi dengan benar.
+
 ## Pilihan storage
 
 ### Penyimpanan lokal

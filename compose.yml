@@ -41,7 +41,9 @@ services:
       DATABASE_URL: postgres://${POSTGRESQL_USER}:${POSTGRESQL_PASSWORD}@postgresql:5432/${POSTGRESQL_DB}
 
     ports:
-      - "127.0.0.1:3000:3000"
+      # Only bind to the host loopback interface. Publish through a reverse
+      # proxy (NGINX/Caddy/Traefik) rather than exposing Zipline directly.
+      - "${ZIPLINE_BIND_ADDRESS:-127.0.0.1}:${ZIPLINE_HOST_PORT:-3000}:3000"
 
     volumes:
       - ./uploads:/zipline/uploads
@@ -62,6 +64,10 @@ services:
 networks:
   zipline-internal:
     name: zipline-internal
+    driver: bridge
+    ipam:
+      config:
+        - subnet: ${ZIPLINE_NETWORK_SUBNET:-172.30.40.0/24}
 
 volumes:
   zipline-postgresql-data:
